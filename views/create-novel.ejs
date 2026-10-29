@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create new Novel</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+    <main>
+        <h1>Create new Novel</h1>
+        <% if(errors.length > 0){ %>
+            <div role="alert">
+                <h2>Please check your entry</h2>
+                <ul>
+                    <% for(let error of errors){ %>
+                        <li><%= error %></li>
+                    <% } %>
+                </ul>
+            
+        <% } %>
+
+        <form action="/novels" method="post">
+            <div>
+            <label for="name">Name:</label>
+            <input name="name" id="name" type="text" value="<%= novel.name ?? '' %>" maxlength="200" required>
+            </div>
+            <div>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" rows="5" maxlength="5000" required><%= novel.description ?? '' %></textarea>
+            </div>
+            <div>
+            <label for="poplishYear">Publication year:</label>
+            <input name="poplishYear" id="poplishYear" type="number" value="<%= novel.poplishYear ?? '' %>" min="0" max="2100" step="any" required>
+            </div>
+            <div>
+            <label for="gere">Genres (comma separated) (optional):</label>
+            <input name="gere" id="gere" type="text" value="<%= (Array.isArray(novel.gere) ? novel.gere.join(', ') : novel.gere) || '' %>" maxlength="2000">
+            </div>
+            <div>
+            <label for="image">Image URL (optional):</label>
+            <input name="image" id="image" type="url" value="<%= novel.image ?? '' %>" maxlength="2000">
+            </div>
+            <button>Create Novel</button>
+            <a href="/novels">Cancel</a>
+        </form>
+    </main>
+</body>
+</html>

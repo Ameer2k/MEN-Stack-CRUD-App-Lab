@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel Details</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+    <main>
+        <h1>Novel Details</h1>
+
+        <p>Name: <%= novel.name ?? 'Not provided' %></p>
+
+        <p class="description">Description: <%= novel.description ?? 'Not provided' %></p>
+
+        <p>Publication year: <%= novel.poplishYear ?? 'Not provided' %></p>
+
+        <p>Genres: <%= novel.gere.join(', ') || 'Not provided' %></p>
+
+        <% if(novel.image){ %>
+            <img src="<%= novel.image %>" alt="<%= novel.name %>" referrerpolicy="no-referrer">
+        <% } %>
+
+        <div>
+            <a class="button" href="/novels/<%= novel._id %>/edit">Edit Novel</a>
+            <a href="/novels">Back to Novels</a>
+        </div>
+
+        <p>Deleting an entry is permanent.</p>
+        <form action="/novels/<%= novel._id %>?_method=DELETE" method="post">
+            <button class="delete-button">Delete Novel</button>
+        </form>
+    </main>
+</body>
+</html>
