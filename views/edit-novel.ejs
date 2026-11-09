@@ -2,54 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Novel</title>
-    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <%- include('./partials/navbar') %>
-    <main>
-        <h1>Edit Novel</h1>
-        <% if(errors.length > 0){ %>
-            <div class="errors" role="alert">
-                <h2>Please check your entry</h2>
-                <ul>
-                    <% for(let error of errors){ %>
-                        <li><%= error %></li>
-                    <% } %>
-                </ul>
-            </div>
-        <% } %>
+    <h1>Edit Novel</h1>
+    <form action="/novels/<%= novel._id %>?_method=PUT" method="post">
+        <label for="name">Name:</label>
+        <input name="name" id="name" type="text" value="<%= novel.name %>" required>
 
-        <form action="/novels/<%= novel._id %>?_method=PUT" method="post">
-            <div>
-                <label for="name">Name:</label>
-                <input name="name" id="name" type="text" value="<%= novel.name ?? '' %>" maxlength="200" required>
-            </div>
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" required><%= novel.description %></textarea>
 
-            <div>
-                <label for="description">Description:</label>
-                <textarea name="description" id="description" rows="5" maxlength="5000" required><%= novel.description ?? '' %></textarea>
-            </div>
+        <label for="poplishYear">Publication year:</label>
+        <input name="poplishYear" id="poplishYear" type="number" value="<%= novel.poplishYear %>" required>
 
-            <div>
-                <label for="poplishYear">Publication year:</label>
-                <input name="poplishYear" id="poplishYear" type="number" value="<%= novel.poplishYear ?? '' %>" min="0" max="2100" step="any" required>
-            </div>
+        <label for="gere">Genres (comma separated):</label>
+        <input name="gere" id="gere" type="text" value="<%= novel.gere.join(', ') %>">
 
-            <div>
-                <label for="gere">Genres (comma separated) (optional):</label>
-                <input name="gere" id="gere" type="text" value="<%= (Array.isArray(novel.gere) ? novel.gere.join(', ') : novel.gere) || '' %>" maxlength="2000">
-            </div>
+        <label for="image">Image URL:</label>
+        <input name="image" id="image" type="url" value="<%= novel.image %>">
 
-            <div>
-                <label for="image">Image URL (optional):</label>
-                <input name="image" id="image" type="url" value="<%= novel.image ?? '' %>" maxlength="2000">
-            </div>
-
-            <button>Save changes</button>
-            <a href="/novels/<%= novel._id %>">Cancel</a>
-        </form>
-    </main>
+        <button>Save Novel</button>
+    </form>
 </body>
 </html>
